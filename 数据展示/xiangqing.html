@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+</head>
+<body>
+
+		<div id="box"></div>
+
+</body>
+<script type="text/javascript">
+//详情
+    var str=window.location.search.substring(4);
+	$.ajax({
+		url:"http://10.115.22.222:8888/infos/detail?id="+str,
+		type:"get",
+		success:function(c){
+			for(var i=0;i<c.length;i++){
+				$("#box").append("<div>"+c[i].name+"</div>"+"<div>"+c[i].id+"</div>"+"<div>"+c[i].intime+
+				"</div>"+"<div>"+c[i].companyname+"</div>"+"<div>"+c[i].companyinfo+"</div>"
+				+"<div>"+c[i].interview+"</div>"+"<div>"+c[i].written+"</div>");
+			}
+		},
+		error:function(c){
+			
+		}
+	});
+
+</script>
+</html>

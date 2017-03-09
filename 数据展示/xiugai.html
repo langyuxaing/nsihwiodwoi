@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>你好</title>
+	<script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+</head>
+<body>
+		<div>
+		<p>面试人<input type="text" id="ren"/></p>
+		<p>面试时间<input type="text" id="shijian"/></p>
+		<p>面试公司<input type="text" id="gongsi"/></p>
+		<p>公司信息<input type="text" id="xinxi"/></p>
+		<p>笔试题<input type="text" id="bishiti"/></p>
+		<p>面试题<input type="text" id="mianshiti"/></p>
+		<p>项目案例<input type="text" id="anli"/></p>
+		<input type="button" value="修改" id="xiugai"/>
+	</div>
+</body>
+<script type="text/javascript">
+	 var str=window.location.search.substring(4);
+	$.ajax({
+		url:"http://192.168.43.252:8888/infos/detail?id="+str,
+		type:"get",
+		success:function(c){
+			for(var i=0;i<c.length;i++){
+				$("#ren").val(c[i].name);
+				$("#shijian").val(c[i].companyname);
+				$("#gongsi").val(c[i].companyinfo);
+				$("#xinxi").val(c[i].written);
+				$("#bishiti").val(c[i].interview);
+				$("#mianshiti").val(c[i].interview);
+				$("#anli").val(c[i].procase);
+			}
+		},
+		error:function(){
+			
+		}
+	});
+	$("#xiugai").click(function(){
+		$.ajax({
+		url:"http://10.115.22.222:8888/zhuce/upda",
+		type:"post",
+		data:{
+			id:str,
+			name:$("#ren").val(),
+			companyname:$("#shijian").val(),
+			written:$("#gongsi").val(),
+			interview:$("#xinxi").val()
+		},
+		success:function(c){
+			if(c.flag==1){
+				alert("修改成功")
+				location.href="index.html";
+			}
+			else{
+				alert("失败")
+			}
+		},
+		error:function(){
+			
+		}
+	    });
+	});
+</script>
+</html>

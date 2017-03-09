@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+</head>
+<body>
+	
+	<div>
+		<p>面试人<input type="text" id="ren"/></p>
+		<p>面试时间<input type="text" id="shijian"/></p>
+		<p>面试公司<input type="text" id="gongsi"/></p>
+		<p>公司信息<input type="text" id="xinxi"/></p>
+		<p>笔试题<input type="text" id="bishiti"/></p>
+		<p>面试题<input type="text" id="mianshiti"/></p>
+		<p>项目案例<input type="text" id="anli"/></p>
+	</div>
+	<input type="button" value="添加" id="tianjia"/>
+</body>
+ <script type="text/javascript">
+ //添加
+ 	var tianjia=document.getElementById("tianjia");
+ 	tianjia.onclick=function(){
+ 		$.ajax({
+ 			url:"http://10.115.22.222:8888/append/append",
+ 			type:"post",
+ 			data:{
+ 				name:$("#ren").val(),
+ 				intime:$("#shijian").val(),
+ 				companyname:$("#gongsi").val(),
+ 				companyinfo:$("#xinxi").val(),
+ 				written:$("#bishiti").val(),
+ 				interview:$("#mianshiti").val(),
+ 				procase:$("#anli").val(),
+ 			},
+ 			success:function(e){
+ 				if(e.flag==1){
+ 					location.href="index.html"
+ 				}
+ 			},
+ 			error:function(){
+ 				
+ 			}
+ 		})
+ 	}
+ </script>
+ <!--<script type="text/javascript">
+ 	  var s="{name:'sdfsdfsdf'}";
+ 	  var j=eval("("+s+")");
+ 	  alert(j.name);
+ </script>-->
+</html>

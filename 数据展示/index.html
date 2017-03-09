@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+	</head>
+	<body>
+		<input type="text" id="sou"/><input type="button" value="搜索"  id="btn"/>
+		<div id="box"></div>
+	</body>
+	<script type="text/javascript">
+	//列表页
+	$.ajax({
+		url:"http://192.168.43.252:8888/zhuce/list",
+		type:"get",
+		success:function(c){
+			for(var i=0;i<c.length;i++){
+				$("#box").append("<div>"+c[i].id+"</div>"+"<div>"+c[i].name+'</div>'+'<a href="xiangqing.html?id='+c[i].id+
+				'">详情</a>'+'<a href="xiugai.html?id='+c[i].id+
+				'">修改</a>'+'<button class="aa">删除</button>')
+			}
+				//删除页
+		},
+		complete:function(c){
+			var json=c.responseText;
+		     var j=eval("("+json+")");
+		     for(var i=0;i<j.length;i++){
+		     	$(".aa").click(function(){
+		     		var index = $(this).parent().parent().index()
+					$.ajax({
+						url:"http://192.168.43.252:8888/zhuce/del?id="+j[index].id,
+						type:"get",
+						success:function(c){
+						     	if(e.flag==1){
+						     		alert("删除成功");
+						     	}
+						     	//location.href="index.html";
+						     	window.location.reload()
+/*						     else if(c.flag==2){
+						     	alert("删除失败");
+						     }*/
+						},
+						error:function(c){
+							alert("数据请求失败！！！")
+						}
+					});
+				})
+		     }
+		},
+		error:function(){
+			alert("数据请求失败！！！")
+		}
+	});
+	//搜索页
+	btn.onclick=function(){
+		box.innerHTML="";
+		var sou=$("#sou").val().trim();
+	    	$.ajax({
+			url:"http://192.168.43.252:8888/infos/search?u="+sou,
+			type:"get",
+			success:function(c){
+				for(var i=0;i<c.length;i++){
+					$("#box").append("<div>"+c[i].name+
+					'</div>'+'<a href="xiangqing.html?id='+c[i].id+'">详情</a>'+"</div>")
+				}
+			},
+			error:function(c){
+			}
+		})
+	}
+	//var cc=eval("("+e.responseText+")")[i].id;字符串转化成json格式
+//        function del(str){
+//					$.ajax({
+//						url:"http://192.168.43.252:8888/zhuce/del?id="+str,
+//						type:"get",
+//						success:function(c){
+//						     if(c.flag==1){
+//						     	alert("删除成功")
+//						     	//location.href="index.html";
+//						     	window.location.reload()
+//						     }
+//						     else if(c.flag==2){
+//						     	alert("删除失败");
+//						     }
+//						},
+//						error:function(c){
+//							
+//						}
+//					});
+//					
+//			}
+	</script>
+</html>
